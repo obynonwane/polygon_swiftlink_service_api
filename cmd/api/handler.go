@@ -254,6 +254,72 @@ func (app *Config) TestnetBorLatestBlockDetails(w http.ResponseWriter, r *http.R
 	app.writeJSON(w, http.StatusAccepted, payload)
 }
 
+func (app *Config) MainnetStateSync(w http.ResponseWriter, r *http.Request) {
+
+	url := os.Getenv("MainnetStateSync")
+	request, _ := http.NewRequest("GET", url, nil)
+
+	// Set headers
+	request.Header.Set("Ok-Access-Key", os.Getenv("StateSyncKey"))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Accept", "application/json")
+	request.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(request)
+	if err != nil {
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
+	}
+
+	defer res.Body.Close()
+
+	var response map[string]interface{}
+	json.NewDecoder(res.Body).Decode(&response)
+
+	payload := jsonResponse{
+		Error:      false,
+		StatusCode: http.StatusAccepted,
+		Message:    "results retrieved successfully",
+		Data:       response,
+	}
+
+	app.writeJSON(w, http.StatusAccepted, payload)
+}
+
+func (app *Config) TestnetStateSync(w http.ResponseWriter, r *http.Request) {
+
+	url := os.Getenv("TestnetStateSync")
+	request, _ := http.NewRequest("GET", url, nil)
+
+	// Set headers
+	request.Header.Set("Ok-Access-Key", os.Getenv("StateSyncKey"))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Accept", "application/json")
+	request.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(request)
+	if err != nil {
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
+	}
+
+	defer res.Body.Close()
+
+	var response map[string]interface{}
+	json.NewDecoder(res.Body).Decode(&response)
+
+	payload := jsonResponse{
+		Error:      false,
+		StatusCode: http.StatusAccepted,
+		Message:    "results retrieved successfully",
+		Data:       response,
+	}
+
+	app.writeJSON(w, http.StatusAccepted, payload)
+}
+
 // func (app *Config) MissedCheckpoint(w http.ResponseWriter, r *http.Request) {
 
 // 	users, err := app.Repo.GetAll()
