@@ -26,5 +26,13 @@ func (app *Config) routes() http.Handler {
 	// Add the Prometheus metrics endpoint to the router
 	mux.Handle("/metrics", promhttp.Handler())
 
+	//POS Mainnet & Testnet: Missed Checkpoint
+	mux.Get("/api/v1/pos/mainnet/mainnet-missed-checkpoint", app.MainnetMissedCheckpoint)
+	mux.Get("/api/v1/pos/testnet/mainnet-missed-checkpoint", app.TestnetMissedCheckpoint)
+
+	//POS Mainnet & Testnet: Heimdell Block Height
+	mux.Get("/api/v1/pos/mainnet/heimdal-block-height", app.MainnetHeimdalBlockHeight)
+	mux.Get("/api/v1/pos/testnet/heimdal-block-height", app.TestnetHeimdalBlockHeight)
+
 	return mux
 }
