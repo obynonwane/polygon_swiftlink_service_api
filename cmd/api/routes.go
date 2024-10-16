@@ -28,7 +28,7 @@ func (app *Config) routes() http.Handler {
 
 	//POS Mainnet & Testnet: Missed Checkpoint
 	mux.Get("/api/v1/pos/mainnet/mainnet-missed-checkpoint", app.MainnetMissedCheckpoint)
-	mux.Get("/api/v1/pos/testnet/mainnet-missed-checkpoint", app.TestnetMissedCheckpoint)
+	mux.Get("/api/v1/pos/testnet/testnet-missed-checkpoint", app.TestnetMissedCheckpoint)
 
 	//POS Mainnet & Testnet: Heimdell Block Height
 	mux.Get("/api/v1/pos/mainnet/heimdal-block-height", app.MainnetHeimdalBlockHeight)
